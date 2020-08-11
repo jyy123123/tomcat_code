@@ -253,9 +253,11 @@ public final class Bootstrap {
      * @throws Exception Fatal initialization error
      */
     public void init() throws Exception {
-
+        System.out.println("===================>bootstrap init方法");
+        //初始化类的加载器
         initClassLoaders();
 
+        //设置当前线程的类加载器
         Thread.currentThread().setContextClassLoader(catalinaLoader);
 
         SecurityClassLoad.securityClassLoad(catalinaLoader);
@@ -264,6 +266,7 @@ public final class Bootstrap {
         if (log.isDebugEnabled())
             log.debug("Loading startup class");
         Class<?> startupClass = catalinaLoader.loadClass("org.apache.catalina.startup.Catalina");
+        //获取类的构造函数，通过反射常见catalina对象
         Object startupInstance = startupClass.getConstructor().newInstance();
 
         // Set the shared extensions class loader
@@ -276,8 +279,10 @@ public final class Bootstrap {
         paramValues[0] = sharedLoader;
         Method method =
             startupInstance.getClass().getMethod(methodName, paramTypes);
+        //调用catalina中的setPartnerClassLoader方法
         method.invoke(startupInstance, paramValues);
 
+        //将catalina对象赋给catalinaDaemon
         catalinaDaemon = startupInstance;
 
     }
@@ -452,20 +457,24 @@ public final class Bootstrap {
      * Main method and entry point when starting Tomcat via the provided
      * scripts.
      *
+     * tomcat的启动类
      * @param args Command line arguments to be processed
      */
     public static void main(String args[]) {
 
         if (daemon == null) {
             // Don't set daemon until init() has completed
+            //创建Bootstrap对象
             Bootstrap bootstrap = new Bootstrap();
             try {
+                //调用bootstrap的init的方法进行初始化
                 bootstrap.init();
             } catch (Throwable t) {
                 handleThrowable(t);
                 t.printStackTrace();
                 return;
             }
+            //将bootstrap的对象赋给daemon
             daemon = bootstrap;
         } else {
             // When running as a service the call to stop will be on a new

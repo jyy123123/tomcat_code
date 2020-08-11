@@ -963,6 +963,8 @@ public class Connector extends LifecycleMBeanBase  {
     @Override
     protected void initInternal() throws LifecycleException {
 
+        System.out.println("===================>Connector init方法");
+
         super.initInternal();
 
         // Initialize adapter

@@ -1114,7 +1114,9 @@ public abstract class AbstractEndpoint<S> {
     public abstract void stopInternal() throws Exception;
 
     public void init() throws Exception {
+        System.out.println("===================>endPoint init方法");
         if (bindOnInit) {
+            System.out.println("===================>绑定端口号");
             bind();
             bindState = BindState.BOUND_ON_INIT;
         }

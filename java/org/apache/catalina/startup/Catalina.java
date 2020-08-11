@@ -530,6 +530,8 @@ public class Catalina {
      */
     public void load() {
 
+        System.out.println("===================>catalina load方法");
+
         if (loaded) {
             return;
         }
@@ -543,6 +545,7 @@ public class Catalina {
         initNaming();
 
         // Create and execute our Digester
+        //tomcat的xml文件解析工具
         Digester digester = createStartDigester();
 
         InputSource inputSource = null;

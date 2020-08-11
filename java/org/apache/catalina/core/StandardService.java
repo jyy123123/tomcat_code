@@ -528,6 +528,8 @@ public class StandardService extends LifecycleMBeanBase implements Service {
     @Override
     protected void initInternal() throws LifecycleException {
 
+        System.out.println("===================>StandardService init方法");
+
         super.initInternal();
 
         if (engine != null) {

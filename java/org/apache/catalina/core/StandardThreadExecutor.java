@@ -102,6 +102,7 @@ public class StandardThreadExecutor extends LifecycleMBeanBase
 
     @Override
     protected void initInternal() throws LifecycleException {
+        System.out.println("===================>StandardThreadExecutor init方法");
         super.initInternal();
     }
 

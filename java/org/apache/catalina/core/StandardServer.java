@@ -826,6 +826,8 @@ public final class StandardServer extends LifecycleMBeanBase implements Server {
     @Override
     protected void initInternal() throws LifecycleException {
 
+        System.out.println("===================>StandardServer init方法");
+
         super.initInternal();
 
         // Register global String cache
